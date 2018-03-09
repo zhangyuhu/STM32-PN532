@@ -21,7 +21,7 @@ void LED_Init(void)
 /******************************************************************************
  * @brief LED_Open
  *****************************************************************************/
-void LED_Open(void)
+void LED_Close(void)
 {
     GPIO_SetBits(LED_PORT, LED_PIN );
 }
@@ -29,7 +29,7 @@ void LED_Open(void)
 /******************************************************************************
  * @brief LED_Close
  *****************************************************************************/
-void LED_Close(void)
+void LED_Open(void)
 {
     GPIO_ResetBits(LED_PORT, LED_PIN );
 }

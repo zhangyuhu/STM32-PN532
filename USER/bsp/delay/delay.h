@@ -2,10 +2,9 @@
 #define __DELAY_H
 #include "sys.h"
 
-void delay_init(void);
-void delay_ms(u16 nms);
-void delay_us(u32 nus);
-
+void delayInit(uint8_t SYSCLK);
+void delayUs(uint32_t nus);
+void delayMs(uint16_t nms);
 #endif
 
 

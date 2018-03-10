@@ -88,7 +88,7 @@ static void uartConfig(void)
 #endif
 
 #if defined (Open_UART2)
-    USART_InitStructure.USART_BaudRate = 9600;
+    USART_InitStructure.USART_BaudRate = 115200;
     USART_InitStructure.USART_WordLength = USART_WordLength_8b;
     USART_InitStructure.USART_StopBits = USART_StopBits_1;
     USART_InitStructure.USART_Parity = USART_Parity_No;
@@ -165,11 +165,16 @@ void uartxInit(void)
 /******************************************************************************
  * @brief uart1SendData
  *****************************************************************************/
-void uart1SendData(uint8_t data)
+void uart1SendData(uint8_t *data,uint8_t length)
 {
-    USART_SendData(USART1,data);
-    //Loop until the end of transmission
-    while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
+    uint8_t i;
+    for(i=0;i<length;i++)
+    {
+        USART_SendData(USART1, data[i]);
+        while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET)//等待发送完成
+        {
+        }
+    }
 }
 
 

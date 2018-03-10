@@ -154,7 +154,7 @@ void SysTick_Handler(void)
 /**
   * @}
   */
-
+#if 0      //放在NFC文件中
 void USART1_IRQHandler(void)
 {
   if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
@@ -167,7 +167,7 @@ void USART1_IRQHandler(void)
 
   }
 }
-
+#endif
 void USART2_IRQHandler(void)
 {
   if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)

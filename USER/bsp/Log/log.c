@@ -6,8 +6,8 @@
 PUTCHAR_PROTOTYPE
 {
     //Place your implementation of fputc here , e.g. write a character to the USART
-    USART_SendData(USART1,(u8)ch);
+    USART_SendData(USART2,(u8)ch);
     //Loop until the end of transmission
-    while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
+    while (USART_GetFlagStatus(USART2, USART_FLAG_TXE) == RESET);
     return ch;
 }

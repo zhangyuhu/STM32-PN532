@@ -6,7 +6,7 @@
 //功能宏定义
 #define WATCHDOG
 #define Open_UART1
-#define Open_UART3
+#define Open_UART2
 
 //LED灯
 #define LED_RCC                                   (RCC_APB2Periph_GPIOC)
@@ -29,9 +29,9 @@
 #define USART1_CLK_Cmd             RCC_APB2PeriphClockCmd
 #define USART1_CLK                       RCC_APB2Periph_USART1
 
-#define USART1_GPIO_PORT         GPIOA
-#define USART1_RxPin                    GPIO_Pin_10
-#define USART1_TxPin                    GPIO_Pin_9
+#define USART1_GPIO_PORT           GPIOA
+#define USART1_RxPin               GPIO_Pin_10
+#define USART1_TxPin               GPIO_Pin_9
 
 #endif
 

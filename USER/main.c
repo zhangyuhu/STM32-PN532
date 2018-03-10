@@ -10,6 +10,7 @@
 #include "delay.h"
 #include "hal_watchdog.h"
 #include "hal_uart.h"
+#include "nfc.h"
 #include "log.h"
 
 
@@ -20,9 +21,13 @@ int main(void)
     delayInit(72);
     LED_Init();
     uartxInit();
-#if 1 //暂不使用看门狗
+    TIM2_Configuration();
+#if 0 //暂不使用看门狗
     watchdogInit(2);
 #endif
+    printf("sys start \r\n");
+    nfc_WakeUp();
+
     while (1)
     {
         printf("test uart \r\n");

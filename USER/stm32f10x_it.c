@@ -1,11 +1,11 @@
 /**
   ******************************************************************************
-  * @file    Project/STM32F10x_StdPeriph_Template/stm32f10x_it.c 
+  * @file    Project/STM32F10x_StdPeriph_Template/stm32f10x_it.c
   * @author  MCD Application Team
   * @version V3.4.0
   * @date    10/15/2010
   * @brief   Main Interrupt Service Routines.
-  *          This file provides template for all exceptions handler and 
+  *          This file provides template for all exceptions handler and
   *          peripherals interrupt service routine.
   ******************************************************************************
   * @copy
@@ -18,7 +18,7 @@
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
   * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  */ 
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x_it.h"
@@ -153,7 +153,43 @@ void SysTick_Handler(void)
 
 /**
   * @}
-  */ 
+  */
 
+void USART1_IRQHandler(void)
+{
+  if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
+  {
+    USART_ClearITPendingBit(USART1,USART_IT_RXNE);
+
+    USART_SendData(USART1,USART_ReceiveData(USART1));
+    //Loop until the end of transmission
+    while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
+
+  }
+}
+
+void USART2_IRQHandler(void)
+{
+  if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)
+  {
+    USART_ClearITPendingBit(USART2,USART_IT_RXNE);
+
+    USART_SendData(USART2,USART_ReceiveData(USART2));
+    //Loop until the end of transmission
+    while (USART_GetFlagStatus(USART2, USART_FLAG_TXE) == RESET);
+
+  }
+}
+
+void USART3_IRQHandler(void)
+{
+    if(USART_GetITStatus(USART3, USART_IT_RXNE) != RESET)
+    {
+        USART_ClearITPendingBit(USART3,USART_IT_RXNE);
+        USART_SendData(USART3,USART_ReceiveData(USART3));
+        //Loop until the end of transmission
+        while (USART_GetFlagStatus(USART3, USART_FLAG_TXE) == RESET);
+    }
+}
 
 /******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/

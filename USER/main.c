@@ -26,15 +26,14 @@ int main(void)
     watchdogInit(2);
 #endif
     printf("sys start \r\n");
+    printf("start wakeup nfc !!! \r\n");
     nfc_WakeUp();
 
     while (1)
     {
-        printf("test uart \r\n");
-        LED_Open();
-        delayMs(1000);
-        LED_Close();
-        delayMs(1000);
+        nfc_InListPassiveTarget();
+        //nfc_PsdVerifyKeyA();
+        delayMs(10);
     }
 }
 

@@ -21,17 +21,17 @@ int main(void)
     delayInit(72);
     LED_Init();
     uartxInit();
-    TIM2_Configuration();
+    //TIM2_Configuration();
 #if 0 //暂不使用看门狗
     watchdogInit(2);
 #endif
     printf("sys start \r\n");
     printf("start wakeup nfc !!! \r\n");
-    nfc_WakeUp();
+    //nfc_WakeUp();
 
     while (1)
     {
-        nfc_InListPassiveTarget();
+        //nfc_InListPassiveTarget();
         //nfc_PsdVerifyKeyA();
         delayMs(10);
     }

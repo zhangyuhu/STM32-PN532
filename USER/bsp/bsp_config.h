@@ -1,13 +1,21 @@
 #ifndef __BSP_CONFIG_H
 #define __BSP_CONFIG_H
 
-//#include "stm32f10x_conf.h"
+//#include <stdio.h>
+#include <stdarg.h>
+#include <stdint.h>
+#include <stddef.h>
+#include <stdbool.h>
+#include "string.h"
+#include "log.h"
 
 //功能宏定义
 #define WATCHDOG
 #define Open_UART1
 #define Open_UART2
 
+#define CFG_UART_BUFSIZE 512 //串口最大数据
+//#define PN532_DEBUGMODE
 //LED灯
 #define LED_RCC                                   (RCC_APB2Periph_GPIOC)
 #define LED_PIN                                   (GPIO_Pin_13)

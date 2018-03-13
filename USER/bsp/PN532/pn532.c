@@ -4,9 +4,10 @@
 */
 /**************************************************************************/
 #include <string.h>
-
+#include "log.h"
 #include "pn532.h"
 #include "pn532_bus.h"
+#include <stdio.h>
 
 static pn532_pcb_t pcb;
 

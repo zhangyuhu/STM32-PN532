@@ -3,6 +3,8 @@
 /******************************************************************************
  * @brief printf打印重定向
  *****************************************************************************/
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+
 PUTCHAR_PROTOTYPE
 {
     //Place your implementation of fputc here , e.g. write a character to the USART

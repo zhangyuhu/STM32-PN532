@@ -87,6 +87,8 @@
 #include "../pn532_bus.h"
 #include "pn532_mifare_ultralight.h"
 #include "delay.h"
+#include "log.h"
+#include <stdio.h>
 //#include "core/systick/systick.h"
 
 /**************************************************************************/
@@ -276,8 +278,8 @@ pn532_error_t pn532_mifareultralight_ReadPage (uint8_t page, uint8_t * pbtBuffer
 
   /* Display data for debug if requested */
   #ifdef PN532_DEBUGMODE
-    PN532_DEBUG("Page %02d: ", page, CFG_PRINTF_NEWLINE);
-    pn532PrintHexVerbose(pbtBuffer, 4);
+    PN532_DEBUG("Page %02d: %s", page, CFG_PRINTF_NEWLINE);
+//    pn532PrintHexVerbose(pbtBuffer, 4);
   #endif
 
   // Return OK signal

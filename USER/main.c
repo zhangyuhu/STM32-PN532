@@ -10,9 +10,8 @@
 #include "delay.h"
 #include "hal_watchdog.h"
 #include "hal_uart.h"
-#include "nfc.h"
 #include "log.h"
-
+#include "pn532.h"
 
 int main(void)
 {
@@ -22,6 +21,7 @@ int main(void)
     LED_Init();
     uartxInit();
     //TIM2_Configuration();
+    pn532Init();
 #if 0 //暂不使用看门狗
     watchdogInit(2);
 #endif

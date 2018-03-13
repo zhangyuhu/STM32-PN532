@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include "string.h"
+#include <stdio.h>
 #include "log.h"
 
 //功能宏定义

@@ -15,6 +15,15 @@
 #include "pn532.h"
 #include "pn532_mifare_ultralight.h"
 
+
+#define CHECK_CARD_AND_WRITE                (0)
+#define READ_CARD                           (0)
+
+static void check_card_and_write(void);
+static void read_card_page(void);
+static void write_card_page_all_zero(void);
+static uint8_t read_card_page_and_find_min_page(void);
+
 int main(void)
 {
     SystemInit();
@@ -22,53 +31,158 @@ int main(void)
     delayInit(72);
     LED_Init();
     uartxInit();
-    //TIM2_Configuration();
     pn532Init();
 #if 0 //暂不使用看门狗
     watchdogInit(2);
 #endif
+
+    printf("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n");
+    printf("................................................................\r\n");
+
+    //write_card_page_all_zero();
+    //check_card_and_write();
+    read_card_page();
+    while (1)
+    {
+        ;
+    }
+}
+static void write_card_page_all_zero(void)
+{
+     //check card
+    uint8_t UID[] ={0x04 ,0x82 ,0x22 ,0xAA ,0xDC ,0x39 ,0x80};
+    size_t UID_LEN = 7;
+    pn532_error_t error;
+
+    error = pn532_mifareultralight_WaitForPassiveTarget (UID,&UID_LEN);
+
+    printf("WaitForPassiveTarget error %d !!! \r\n",error);
+
+    int t = 0x0;
+    uint8_t page = 0;
+    for(page = 4; page<= 15 ;page++)
+    {
+        //wite
+        error = PN532_mifareultralight_WritePage(page,(uint8_t*)&t);
+
+        if(error == PN532_ERROR_NONE)
+        {
+            printf("page %d write ok !!! \r\n",page);
+        }
+        else
+        {
+            page -- ;
+        }
+        delayMs(100);
+    }
+}
+static void check_card_and_write(void)
+{
+#if 1
+    //check card
+    uint8_t UID[] ={0x04 ,0x82 ,0x22 ,0xAA ,0xDC ,0x39 ,0x80};
+    size_t UID_LEN = 7;
+    pn532_error_t error;
+
+    error = pn532_mifareultralight_WaitForPassiveTarget (UID,&UID_LEN);
+
+    printf("WaitForPassiveTarget error %d !!! \r\n",error);
+
+    //get time
     RTC_UTCTimeStruct time;
     time.year = 2018;
-    time.month= 3;
+    time.month = 3;
     time.day = 15;
     time.hour = 1;
     time.minutes = 50;
-    time.seconds  = 1;
+    time.seconds  = 34;
 
-     int t = 0;
-     t = convert_time_to_Second(time);
-    
+    int t = 0;
+    t = convert_time_to_Second(time);
+
     printf("sys start t %d\r\n",t);
-    printf("start wakeup nfc !!! \r\n");
-    
-    RTC_UTCTimeStruct timetest;
-    ConvertToUTCTime(&timetest,t);
-    printf("time : %d - %d - %d - %d - %d - %d!!! \r\n",timetest.year,timetest.month,timetest.day,timetest.hour,timetest.minutes,timetest.seconds);
-    
-   #if 0
-    uint8_t UID[] ={0x04 ,0x82 ,0x22 ,0xAA ,0xDC ,0x39 ,0x80};
-    size_t UID_LEN[2] ={7};
-    pn532_mifareultralight_WaitForPassiveTarget (UID,UID_LEN);
 
-    uint8_t pbtBuffer1[4] = {4,3,4,2};
-    PN532_mifareultralight_WritePage(5,pbtBuffer1);
-    delayMs(1000);
-    uint8_t page = 5;
-    uint8_t pbtBuffer[4] = {0,0,0,0};
-    pn532_mifareultralight_ReadPage(page,pbtBuffer);
-    
-    for(int i=0;i<4;i++)
+    //wite
+    uint8_t page = 0;
+    page = read_card_page_and_find_min_page();
+    if((page <= 3)||(page >= 15))
     {
-      printf("pbtBuffer %d !!! \r\n",pbtBuffer[i]);
+        printf("page = %d error!!! \r\n",page);
+        return ;
     }
-    #endif
-    while (1)
-    {
-        //nfc_InListPassiveTarget();
-        //nfc_PsdVerifyKeyA();
-        delayMs(10);
-    }
+    error = PN532_mifareultralight_WritePage(page,(uint8_t*)&t);
+    printf("PN532_mifareultralight_WritePage page %d  error %d !!! \r\n",page,error);
+#endif
 }
 
+static void read_card_page(void)
+{
+#if 1
+    //check card
+    uint8_t UID[] ={0x04 ,0x82 ,0x22 ,0xAA ,0xDC ,0x39 ,0x80};
+    size_t UID_LEN = 7;
+    pn532_error_t error;
 
+    error = pn532_mifareultralight_WaitForPassiveTarget (UID,&UID_LEN);
+
+    printf("WaitForPassiveTarget error %d !!! \r\n",error);
+ 
+    //read page
+    uint8_t page = 0;
+    for(page = 4; page<= 15 ;page++)
+    {
+        uint32_t pbtBuffer = 0;
+        error = pn532_mifareultralight_ReadPage(page,(uint8_t*)&pbtBuffer);
+        printf("page %d error %d!!! \r\n",page,error);
+        if(error == PN532_ERROR_NONE)
+        {
+            printf("pbtBuffer %d !!! \r\n",pbtBuffer);
+
+            RTC_UTCTimeStruct timetest;
+            ConvertToUTCTime(&timetest,pbtBuffer);
+            printf("time : %d - %d - %d - %d - %d - %d!!! \r\n",timetest.year,timetest.month,timetest.day,timetest.hour,timetest.minutes,timetest.seconds);
+        }
+        else
+        {
+            page -- ;
+        }
+        delayMs(100);
+    }
+#endif
+}
+
+static uint8_t read_card_page_and_find_min_page(void)
+{
+    pn532_error_t error;
+    uint32_t page_content [16] = {0};
+    uint8_t page = 0;
+    for(page = 4; page<= 15 ;page++)
+    {
+        uint32_t pbtBuffer = 0;
+        error = pn532_mifareultralight_ReadPage(page,(uint8_t*)&pbtBuffer);
+        printf("page_content[%d] = %d error %d!!! \r\n",page,pbtBuffer,error);
+        if(error == PN532_ERROR_NONE)
+        {
+            page_content[page]  = pbtBuffer;
+        }
+        else
+        {
+            page -- ;
+        }
+        delayMs(10);
+    }
+    
+    //排序找出最小的时间 写的时候覆盖此区域
+    uint8_t pos = 0;
+    uint32_t min = page_content[4];
+    for(int i = 4; i<15; i++) 
+    {
+        if(page_content[i] <= min) 
+        {
+            min = page_content[i];
+            pos = i;
+        }
+    }
+    return pos;
+}
 

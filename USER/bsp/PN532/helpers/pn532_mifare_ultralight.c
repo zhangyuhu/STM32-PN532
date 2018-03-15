@@ -295,7 +295,7 @@ pn532_error_t pn532_mifareultralight_ReadPage (uint8_t page, uint8_t * pbtBuffer
     @returns 1 if everything executed properly, 0 for an error
 */
 /**************************************************************************/
-uint8_t PN532_mifareultralight_WritePage (uint8_t page, uint8_t *buffer)
+pn532_error_t PN532_mifareultralight_WritePage (uint8_t page, uint8_t *buffer)
 {
     pn532_error_t error;
     uint8_t abtCommand[8];

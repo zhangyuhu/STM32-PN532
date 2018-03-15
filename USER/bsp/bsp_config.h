@@ -16,7 +16,7 @@
 #define Open_UART2
 
 #define CFG_UART_BUFSIZE 512 //串口最大数据
-//#define PN532_DEBUGMODE
+#define PN532_DEBUGMODE
 //LED灯
 #define LED_RCC                                   (RCC_APB2Periph_GPIOC)
 #define LED_PIN                                   (GPIO_Pin_13)

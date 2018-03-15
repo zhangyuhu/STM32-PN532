@@ -111,6 +111,17 @@ enum
   PN532_APPERROR_NADMISSINGINDEP      = 0x2E
 };
 
+// Mifare Commands
+#define MIFARE_CMD_AUTH_A                   (0x60)
+#define MIFARE_CMD_AUTH_B                   (0x61)
+#define MIFARE_CMD_READ                     (0x30)
+#define MIFARE_CMD_WRITE                    (0xA0)
+#define MIFARE_CMD_WRITE_ULTRALIGHT         (0xA2)
+#define MIFARE_CMD_TRANSFER                 (0xB0)
+#define MIFARE_CMD_DECREMENT                (0xC0)
+#define MIFARE_CMD_INCREMENT                (0xC1)
+#define MIFARE_CMD_STORE                    (0xC2)
+
 /* Possible states for the PN532 SW Stack */
 typedef enum pn532_state_e
 {

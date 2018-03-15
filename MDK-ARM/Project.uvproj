@@ -374,7 +374,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F10X_MD</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Libraries\CMSIS\CM3\CoreSupport;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm;..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\Libraries\STM32F10x_StdPeriph_Driver\src;..\USER;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\USER\bsp;..\USER\bsp\LED;..\USER\bsp\Sys;..\USER\bsp\Delay;..\USER\bsp\Watchdog;..\USER\bsp\Usart;..\USER\bsp\Log;..\USER\bsp\Nfc;..\USER\bsp\PN532;..\USER\bsp\PN532\helpers;..\USER\bsp\Usart\nfc_uart</IncludePath>
+              <IncludePath>..\Libraries\CMSIS\CM3\CoreSupport;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm;..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\Libraries\STM32F10x_StdPeriph_Driver\src;..\USER;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\USER\bsp;..\USER\bsp\LED;..\USER\bsp\Sys;..\USER\bsp\Delay;..\USER\bsp\Watchdog;..\USER\bsp\Usart;..\USER\bsp\Log;..\USER\bsp\Nfc;..\USER\bsp\PN532;..\USER\bsp\PN532\helpers;..\USER\bsp\Usart\nfc_uart;..\USER\framework\time</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -637,6 +637,11 @@
               <FileName>nfc_uart_buf.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\USER\bsp\Usart\nfc_uart\nfc_uart_buf.c</FilePath>
+            </File>
+            <File>
+              <FileName>timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\framework\time\timer.c</FilePath>
             </File>
           </Files>
         </Group>

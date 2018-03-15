@@ -286,3 +286,55 @@ pn532_error_t pn532_mifareultralight_ReadPage (uint8_t page, uint8_t * pbtBuffer
   return PN532_ERROR_NONE;
 }
 
+/**************************************************************************/
+/*!
+    Tries to write an entire 4-bytes data buffer at the specified page
+    address.
+    @param  page     The page number to write into.  (0..63).
+    @param  buffer   The byte array that contains the data to write.
+    @returns 1 if everything executed properly, 0 for an error
+*/
+/**************************************************************************/
+uint8_t PN532_mifareultralight_WritePage (uint8_t page, uint8_t *buffer)
+{
+    pn532_error_t error;
+    uint8_t abtCommand[8];
+    uint8_t abtResponse[PN532_RESPONSELEN_INDATAEXCHANGE];
+    size_t szLen;
+
+    /* Prepare the first command */
+    abtCommand[0] = PN532_COMMAND_INDATAEXCHANGE;
+    abtCommand[1] = 1;                           /* Card number */
+    abtCommand[2] = MIFARE_CMD_WRITE_ULTRALIGHT; /* Mifare UL Write cmd = 0xA2 */
+    abtCommand[3] = page;                        /* page Number (0..63) */
+    memcpy (abtCommand + 4, buffer, 4);          /* Data Payload */
+
+    /* Send the command */
+    error = pn532Write(abtCommand, sizeof(abtCommand));
+    
+    if (error)
+    {
+        /* Bus error, etc. */
+     #ifdef PN532_DEBUGMODE
+        PN532_DEBUG("Read failed%s", CFG_PRINTF_NEWLINE);
+     #endif
+        return error;
+    }
+
+      /* Read the response */
+      memset(abtResponse, 0, PN532_RESPONSELEN_INDATAEXCHANGE);
+      do
+      {
+        delayMs(50);
+        error = pn532Read(abtResponse, &szLen);
+      }
+      while (error == PN532_ERROR_RESPONSEBUFFEREMPTY);
+      if (error)
+      {
+        #ifdef PN532_DEBUGMODE
+          PN532_DEBUG("Read failed%s", CFG_PRINTF_NEWLINE);
+        #endif
+        return error;
+      } 
+
+}

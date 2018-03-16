@@ -45,18 +45,18 @@
 // Buffer used for circular fifo
 typedef struct _uart_buffer_t
 {
-  uint8_t ep_dir;
-  volatile uint8_t len;
-  volatile uint8_t wr_ptr;
-  volatile uint8_t rd_ptr;
-  uint8_t buf[CFG_UART_BUFSIZE];
+    uint8_t ep_dir;
+    volatile uint8_t len;
+    volatile uint8_t wr_ptr;
+    volatile uint8_t rd_ptr;
+    uint8_t buf[CFG_UART_BUFSIZE];
 } uart_buffer_t;
 
 // UART Protocol control block
 typedef struct _uart_pcb_t
 {
-  bool initialised;
-  uart_buffer_t rxfifo;
+    bool initialised;
+    uart_buffer_t rxfifo;
 } uart_pcb_t;
 
 void UART_IRQHandler(void);

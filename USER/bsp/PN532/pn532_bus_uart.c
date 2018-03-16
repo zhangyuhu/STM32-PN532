@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*! 
+/*!
     @file   pn532_bus_uart.c
 */
 /**************************************************************************/
@@ -9,14 +9,11 @@
 #include "pn532_bus.h"
 #include "nfc_uart.h"
 #include "delay.h"
+
 #ifdef PN532_BUS_UART
 
-//#include "core/systick/systick.h"
-//#include "core/gpio/gpio.h"
-//#include "core/uart/uart.h"
-
 /**************************************************************************/
-/*! 
+/*!
     @brief  Builds a standard PN532 frame using the supplied data
 
     @param  pbtFrame  Pointer to the field that will hold the frame data
@@ -31,7 +28,7 @@
 /**************************************************************************/
 pn532_error_t pn532_bus_BuildFrame(uint8_t * pbtFrame, size_t * pszFrame, const uint8_t * pbtData, const size_t szData)
 {
-  if (szData > PN532_NORMAL_FRAME__DATA_MAX_LEN) 
+  if (szData > PN532_NORMAL_FRAME__DATA_MAX_LEN)
   {
     // Extended frames currently unsupported
     return PN532_ERROR_EXTENDEDFRAME;
@@ -49,7 +46,7 @@ pn532_error_t pn532_bus_BuildFrame(uint8_t * pbtFrame, size_t * pszFrame, const 
   // DCS - Calculate data payload checksum
   uint8_t btDCS = (256 - 0xD4);
   size_t szPos;
-  for (szPos = 0; szPos < szData; szPos++) 
+  for (szPos = 0; szPos < szData; szPos++)
   {
     btDCS -= pbtData[szPos];
   }
@@ -64,7 +61,7 @@ pn532_error_t pn532_bus_BuildFrame(uint8_t * pbtFrame, size_t * pszFrame, const 
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  Sends the specified command to the PN532, automatically
             creating an appropriate frame for it
 
@@ -81,7 +78,7 @@ pn532_error_t pn532_bus_BuildFrame(uint8_t * pbtFrame, size_t * pszFrame, const 
 pn532_error_t pn532_bus_SendCommand(const uint8_t * pbtData, const size_t szData)
 {
   pn532_pcb_t *pn532 = pn532GetPCB();
-    
+
   // Check if we're busy
   if (pn532->state == PN532_STATE_BUSY)
   {
@@ -114,7 +111,7 @@ pn532_error_t pn532_bus_SendCommand(const uint8_t * pbtData, const size_t szData
   uint8_t abtRxBuf[6];
   uart_pcb_t *uart = uartGetPCB();
   delayMs(10);   // FIXME: How long should we wait for ACK?
-  if (uart->rxfifo.len < 6) 
+  if (uart->rxfifo.len < 6)
   {
     // Unable to read ACK
     #ifdef PN532_DEBUGMODE
@@ -134,7 +131,7 @@ pn532_error_t pn532_bus_SendCommand(const uint8_t * pbtData, const size_t szData
   abtRxBuf[5] = uartRxBufferRead();
 
   // Make sure the received ACK matches the prototype
-  if (0 != (memcmp (abtRxBuf, abtAck, 6))) 
+  if (0 != (memcmp (abtRxBuf, abtAck, 6)))
   {
     #ifdef PN532_DEBUGMODE
     PN532_DEBUG ("Invalid ACK: ");
@@ -150,7 +147,7 @@ pn532_error_t pn532_bus_SendCommand(const uint8_t * pbtData, const size_t szData
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  Reads a response from the PN532
 
     @note   Possible error message are:
@@ -180,7 +177,7 @@ pn532_error_t pn532_bus_ReadResponse(uint8_t * pbtResponse, size_t * pszRxLen)
   pn532->appError = PN532_APPERROR_NONE;
 
   // Read response from uart
-  if (!uartRxBufferReadArray(pbtResponse, pszRxLen)) 
+  if (!uartRxBufferReadArray(pbtResponse, pszRxLen))
   {
     pn532->state = PN532_STATE_READY;
     return PN532_ERROR_RESPONSEBUFFEREMPTY;
@@ -191,10 +188,10 @@ pn532_error_t pn532_bus_ReadResponse(uint8_t * pbtResponse, size_t * pszRxLen)
   PN532_DEBUG("Received (%02d): ", *pszRxLen);
   pn532PrintHex(pbtResponse, *pszRxLen);
   #endif
-  
+
   // Check preamble
   const uint8_t pn53x_preamble[3] = { 0x00, 0x00, 0xff };
-  if (0 != (memcmp (pbtResponse, pn53x_preamble, 3))) 
+  if (0 != (memcmp (pbtResponse, pn53x_preamble, 3)))
   {
     #ifdef PN532_DEBUGMODE
     PN532_DEBUG("Frame preamble + start code mismatch%s", CFG_PRINTF_NEWLINE);
@@ -204,7 +201,7 @@ pn532_error_t pn532_bus_ReadResponse(uint8_t * pbtResponse, size_t * pszRxLen)
   }
 
   // Check the frame type
-  if ((0x01 == pbtResponse[3]) && (0xff == pbtResponse[4])) 
+  if ((0x01 == pbtResponse[3]) && (0xff == pbtResponse[4]))
   {
     // Error frame
     #ifdef PN532_DEBUGMODE
@@ -214,8 +211,8 @@ pn532_error_t pn532_bus_ReadResponse(uint8_t * pbtResponse, size_t * pszRxLen)
     pn532->appError = pbtResponse[5];
     pn532->state = PN532_STATE_READY;
     return PN532_ERROR_APPLEVELERROR;
-  } 
-  else if ((0xff == pbtResponse[3]) && (0xff == pbtResponse[4])) 
+  }
+  else if ((0xff == pbtResponse[3]) && (0xff == pbtResponse[4]))
   {
     // Extended frame
     #ifdef PN532_DEBUGMODE
@@ -223,11 +220,11 @@ pn532_error_t pn532_bus_ReadResponse(uint8_t * pbtResponse, size_t * pszRxLen)
     #endif
     pn532->state = PN532_STATE_READY;
     return PN532_ERROR_EXTENDEDFRAME;
-  } 
-  else 
+  }
+  else
   {
     // Normal frame
-    if (256 != (pbtResponse[3] + pbtResponse[4])) 
+    if (256 != (pbtResponse[3] + pbtResponse[4]))
     {
       // TODO: Retry
       #ifdef PN532_DEBUGMODE
@@ -244,7 +241,7 @@ pn532_error_t pn532_bus_ReadResponse(uint8_t * pbtResponse, size_t * pszRxLen)
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief      Sends the wakeup sequence to the PN532.
 */
 /**************************************************************************/

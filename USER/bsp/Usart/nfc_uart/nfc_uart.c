@@ -78,69 +78,40 @@ uart_pcb_t *uartGetPCB()
 void uartInit(uint32_t baudrate)
 {
 
-  /* Set the initialised flag in the protocol control block */
-  pcb.initialised = 1;
-  return;
+    /* Set the initialised flag in the protocol control block */
+    pcb.initialised = 1;
+    return;
 }
 
 /**************************************************************************/
-/*!
+/*
     @brief Sends the contents of supplied text buffer over UART.
-
-    @param[in]  bufferPtr
-                Pointer to the text buffer
-    @param[in]  bufferPtr
-                The size of the text buffer
-
-    @section Example
-
-    @code
-    // Set 5-character text buffer
-    uint8_t uartBuffer[5] = { 'T', 'e', 's', 't', '\n' };
-    // Send contents of uartBuffer
-    uartSend((uint8_t *)uartBuffer, 5);
-    @endcode
-
 */
 /**************************************************************************/
 void uartSend (uint8_t *bufferPtr, uint32_t length)
 {
-  while (length != 0)
-  {
-    USART_SendData(USART1, *bufferPtr);
-    while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET)//等待发送完成
+    while (length != 0)
     {
+        USART_SendData(USART1, *bufferPtr);
+        while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET)//等待发送完�?
+        {
 
+        }
+        bufferPtr++;
+        length--;
     }
-    bufferPtr++;
-    length--;
-  }
 
-  return;
+    return;
 }
 
-/**************************************************************************/
-/*!
-    @brief Sends a single byte over UART.
 
-    @param[in]  byte
-                Byte value to send
-
-    @section Example
-
-    @code
-    // Send 0xFF over UART
-    uartSendByte(0xFF);
-    // Send 'B' over UART (note single quotes)
-    uartSendByte('B');
-    @endcode
-
-*/
-/**************************************************************************/
+/******************************************************************************
+ * @brief  Sends a single byte over UART.
+ *****************************************************************************/
 void uartSendByte (uint8_t byte)
 {
     USART_SendData(USART1,byte);
-    while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET)//等待发送完成
+    while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET)//等待发送完�?
     {
 
     }

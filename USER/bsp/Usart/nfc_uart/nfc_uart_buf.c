@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*! 
+/*!
     @file     uart_buf.c
     @author   Christopher Wang (Freaklabs)
               Modified by: K. Townsend (microBuilder.eu)
@@ -11,7 +11,6 @@
     If it works well, you can thank Akiba at Freaklabs.  If it fails
     miserably, you can blame me (since parts of it it were rather
     ungraciously modified). :-)
-
 */
 /**************************************************************************/
 
@@ -24,8 +23,8 @@
 /**************************************************************************/
 void uartRxBufferInit()
 {
-  uart_pcb_t *pcb = uartGetPCB();
-  pcb->rxfifo.len = 0;
+    uart_pcb_t *pcb = uartGetPCB();
+    pcb->rxfifo.len = 0;
 }
 
 /**************************************************************************/
@@ -38,13 +37,13 @@ void uartRxBufferInit()
 /**************************************************************************/
 uint8_t uartRxBufferRead()
 {
-  uart_pcb_t *pcb = uartGetPCB();
-  uint8_t data;
+    uart_pcb_t *pcb = uartGetPCB();
+    uint8_t data;
 
-  data = pcb->rxfifo.buf[pcb->rxfifo.rd_ptr];
-  pcb->rxfifo.rd_ptr = (pcb->rxfifo.rd_ptr + 1) % CFG_UART_BUFSIZE;
-  pcb->rxfifo.len--;
-  return data;
+    data = pcb->rxfifo.buf[pcb->rxfifo.rd_ptr];
+    pcb->rxfifo.rd_ptr = (pcb->rxfifo.rd_ptr + 1) % CFG_UART_BUFSIZE;
+    pcb->rxfifo.len--;
+    return data;
 }
 
 /**************************************************************************/
@@ -54,17 +53,17 @@ uint8_t uartRxBufferRead()
 /**************************************************************************/
 bool uartRxBufferReadArray(uint8_t* rx, size_t* len)
 {
-  uart_pcb_t *pcb = uartGetPCB();
-  *len = 0;
-  
-  while(pcb->rxfifo.len != 0)
-  {
-    (*rx) = uartRxBufferRead();
-    (*len)++;
-    rx++;
-  }
-  
-  return (*len != 0);
+    uart_pcb_t *pcb = uartGetPCB();
+    *len = 0;
+
+    while(pcb->rxfifo.len != 0)
+    {
+        (*rx) = uartRxBufferRead();
+        (*len)++;
+        rx++;
+    }
+
+    return (*len != 0);
 }
 
 /**************************************************************************/
@@ -77,11 +76,11 @@ bool uartRxBufferReadArray(uint8_t* rx, size_t* len)
 /**************************************************************************/
 void uartRxBufferWrite(uint8_t data)
 {
-  uart_pcb_t *pcb = uartGetPCB();
+    uart_pcb_t *pcb = uartGetPCB();
 
-  pcb->rxfifo.buf[pcb->rxfifo.wr_ptr] = data;
-  pcb->rxfifo.wr_ptr = (pcb->rxfifo.wr_ptr + 1) % CFG_UART_BUFSIZE;
-  pcb->rxfifo.len++;
+    pcb->rxfifo.buf[pcb->rxfifo.wr_ptr] = data;
+    pcb->rxfifo.wr_ptr = (pcb->rxfifo.wr_ptr + 1) % CFG_UART_BUFSIZE;
+    pcb->rxfifo.len++;
 }
 
 /**************************************************************************/
@@ -91,11 +90,11 @@ void uartRxBufferWrite(uint8_t data)
 /**************************************************************************/
 void uartRxBufferClearFIFO()
 {
-  uart_pcb_t *pcb = uartGetPCB();
+    uart_pcb_t *pcb = uartGetPCB();
 
-  pcb->rxfifo.rd_ptr = 0;
-  pcb->rxfifo.wr_ptr = 0;
-  pcb->rxfifo.len = 0;
+    pcb->rxfifo.rd_ptr = 0;
+    pcb->rxfifo.wr_ptr = 0;
+    pcb->rxfifo.len = 0;
 }
 
 /**************************************************************************/
@@ -105,12 +104,12 @@ void uartRxBufferClearFIFO()
 /**************************************************************************/
 uint8_t uartRxBufferDataPending()
 {
-  uart_pcb_t *pcb = uartGetPCB();
+    uart_pcb_t *pcb = uartGetPCB();
 
-  if (pcb->rxfifo.len != 0)
-  {
-    return 1;
-  }
+    if (pcb->rxfifo.len != 0)
+    {
+        return 1;
+    }
 
-  return 0;
+    return 0;
 }

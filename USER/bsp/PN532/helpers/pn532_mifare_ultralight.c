@@ -83,13 +83,13 @@
 
 #include <string.h>
 
-#include "../pn532.h"
-#include "../pn532_bus.h"
+#include "pn532.h"
+#include "pn532_bus.h"
 #include "pn532_mifare_ultralight.h"
 #include "delay.h"
 #include "log.h"
 #include <stdio.h>
-//#include "core/systick/systick.h"
+
 
 /**************************************************************************/
 /*!
@@ -217,7 +217,7 @@ pn532_error_t pn532_mifareultralight_ReadPage (uint8_t page, uint8_t * pbtBuffer
     uint8_t abtResponse[PN532_RESPONSELEN_INDATAEXCHANGE];
     size_t szLen;
 
-    if (page >= 64)
+    if (page >= MAX_PAGE)
     {
         return PN532_ERROR_ADDRESSOUTOFRANGE;
     }

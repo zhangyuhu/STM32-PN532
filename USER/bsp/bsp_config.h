@@ -14,9 +14,9 @@
 #define WATCHDOG
 #define Open_UART1
 #define Open_UART2
-
-#define CFG_UART_BUFSIZE 512 //串口最大数据
-#define PN532_DEBUGMODE
+#define NTAG216_MAX_PAGE      222
+#define CFG_UART_BUFSIZE      512 //串口最大数据
+#define MAX_PAGE              NTAG216_MAX_PAGE
 //LED灯
 #define LED_RCC                                   (RCC_APB2Periph_GPIOC)
 #define LED_PIN                                   (GPIO_Pin_13)

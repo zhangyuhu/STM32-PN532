@@ -122,6 +122,10 @@ enum
 #define MIFARE_CMD_INCREMENT                (0xC1)
 #define MIFARE_CMD_STORE                    (0xC2)
 
+// ntag216 Commands
+#define NTAG216_FAST_READPAGE               (0x3A)
+
+
 /* Possible states for the PN532 SW Stack */
 typedef enum pn532_state_e
 {

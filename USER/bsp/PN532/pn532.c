@@ -1,8 +1,12 @@
-/**************************************************************************/
-/*!
-    @file     pn532.c
-*/
-/**************************************************************************/
+/*
+ * Copyright (c) 2018 zhangyuhude@163.com
+ * All Rights Reserved.
+ */
+/*
+ * ¸ÄÐ´ÍøÉÏ³ÌÐò
+ * ÎÄ¼þÖ÷ÒªÊÔÏÂPN532»ù±¾Í¨ÐÅÖ¸Áî£¬Èç»½ÐÑ·¢ËÍÖ¸ÁîµÈ¡
+ * Îª»ù±¾µÄÇý¶¯º¯Êý ¸øÉÏ²ãµ÷ÓÃ
+ */
 #include <string.h>
 #include "log.h"
 #include "pn532.h"
@@ -11,14 +15,12 @@
 
 static pn532_pcb_t pcb;
 
-/**************************************************************************/
+/******************************************************************************
 /*!
-    @brief  Prints a hexadecimal value in plain characters
-
-    @param  pbtData   Pointer to the byte data
-    @param  szBytes   Data length in bytes
+    @brief  pn532PrintHex
+    *µ÷ÊÔÊ¹ÓÃ
 */
-/**************************************************************************/
+ /*****************************************************************************/
 void pn532PrintHex(const uint8_t * pbtData, const size_t szBytes)
 {
     size_t szPos;
@@ -33,11 +35,7 @@ void pn532PrintHex(const uint8_t * pbtData, const size_t szBytes)
 /*!
     @brief  Prints a hexadecimal value in plain characters, along with
             the char equivalents in the following format
-
-            AA BB CC DD EE FF  ......
-
-    @param  pbtData   Pointer to the byte data
-    @param  szBytes   Data length in bytes
+    *µ÷ÊÔÊ¹ÓÃ
 */
 /**************************************************************************/
 void pn532PrintHexChar(const uint8_t * pbtData, const size_t szBytes)
@@ -60,6 +58,7 @@ void pn532PrintHexChar(const uint8_t * pbtData, const size_t szBytes)
     @brief      Gets a reference to the PN532 peripheral control block,
                 which can be used to determine that state of the PN532
                 IC, buffers, etc.
+    *´®¿Ú½ÓÊÜÊý¾ÝµÄ»º´æ
 */
 /**************************************************************************/
 pn532_pcb_t * pn532GetPCB()

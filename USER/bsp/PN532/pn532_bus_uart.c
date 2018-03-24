@@ -1,6 +1,7 @@
 /**************************************************************************/
 /*!
     @file   pn532_bus_uart.c
+    *用于于PN532通信时通信格式的构建
 */
 /**************************************************************************/
 #include <string.h>
@@ -9,8 +10,6 @@
 #include "pn532_bus.h"
 #include "nfc_uart.h"
 #include "delay.h"
-
-#ifdef PN532_BUS_UART
 
 /**************************************************************************/
 /*!
@@ -141,6 +140,12 @@ pn532_error_t pn532_bus_SendCommand(const uint8_t * pbtData, const size_t szData
     pn532->state = PN532_STATE_READY;
     return PN532_ERROR_INVALIDACK;
   }
+  else
+  {
+    #ifdef PN532_DEBUGMODE
+    PN532_DEBUG ("ACK OK \r\n");
+    #endif
+  }
 
   pn532->state = PN532_STATE_READY;
   return PN532_ERROR_NONE;
@@ -267,5 +272,3 @@ pn532_error_t pn532_bus_Wakeup(void)
   pn532->state = PN532_STATE_READY;
   return PN532_ERROR_NONE;
 }
-
-#endif  // #ifdef PN532_BUS_UART

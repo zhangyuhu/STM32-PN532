@@ -374,7 +374,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F10X_MD</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Libraries\CMSIS\CM3\CoreSupport;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm;..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\Libraries\STM32F10x_StdPeriph_Driver\src;..\USER;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\USER\bsp;..\USER\bsp\LED;..\USER\bsp\Sys;..\USER\bsp\Delay;..\USER\bsp\Watchdog;..\USER\bsp\Usart;..\USER\bsp\Log;..\USER\bsp\Nfc;..\USER\bsp\PN532;..\USER\bsp\PN532\helpers;..\USER\bsp\Usart\nfc_uart;..\USER\framework\time</IncludePath>
+              <IncludePath>..\Libraries\CMSIS\CM3\CoreSupport;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm;..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\Libraries\STM32F10x_StdPeriph_Driver\src;..\USER;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\USER\bsp;..\USER\bsp\LED;..\USER\bsp\Sys;..\USER\bsp\Delay;..\USER\bsp\Watchdog;..\USER\bsp\Usart;..\USER\bsp\Log;..\USER\bsp\Nfc;..\USER\bsp\PN532;..\USER\bsp\PN532\helpers;..\USER\bsp\Usart\nfc_uart;..\USER\framework\time;..\USER\framework\Card</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -624,11 +624,6 @@
               <FilePath>..\USER\bsp\PN532\pn532_bus_uart.c</FilePath>
             </File>
             <File>
-              <FileName>pn532_mifare_ultralight.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\USER\bsp\PN532\helpers\pn532_mifare_ultralight.c</FilePath>
-            </File>
-            <File>
               <FileName>nfc_uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\USER\bsp\Usart\nfc_uart\nfc_uart.c</FilePath>
@@ -642,6 +637,16 @@
               <FileName>timer.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\USER\framework\time\timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>pn532_ntag216.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\bsp\PN532\helpers\pn532_ntag216.c</FilePath>
+            </File>
+            <File>
+              <FileName>card_operation.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\framework\Card\card_operation.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -28,4 +28,6 @@ void ConvertToUTCTime(RTC_UTCTimeStruct *tm, UTCTime secTime ); /*转成RTC*/
 UTCTime convert_time_to_Second(RTC_UTCTimeStruct time);     /*RTC转成秒*/
 
 
+int test_get_now_time(void);
+
 #endif

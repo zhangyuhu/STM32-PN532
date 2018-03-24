@@ -143,5 +143,11 @@ UTCTime convert_time_to_Second(RTC_UTCTimeStruct time_in) /*将RTC转化为秒*/
     }
 
     return offset;
+}
+static int now_time = 1521912483;
 
+int test_get_now_time(void)
+{
+    now_time = now_time + 5;
+    return now_time;
 }

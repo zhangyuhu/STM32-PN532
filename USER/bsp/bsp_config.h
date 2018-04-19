@@ -23,6 +23,7 @@
 #define LED_PORT                                  (GPIOC)
 
 //串口
+//串口1 接PN532
 #if defined (Open_UART1)
 
 /***************************************************************
@@ -45,7 +46,7 @@
 #endif
 
 #if defined (Open_UART2)
-
+//串口2 log 输出
 #define USART2_GPIO_Cmd             RCC_APB2PeriphClockCmd
 #define USART2_GPIO_CLK             RCC_APB2Periph_GPIOA
 

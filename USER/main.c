@@ -49,13 +49,19 @@ int main(void)
     {
         printf("card ok \r\n");
         int time = test_get_now_time();
-        //ret = write_touch_card_time(&time);
-        ret = read_all_touch_card_time();
+        //下面三个函数是三个功能，每次只能打开一个
+        //第一使用卡 要使用 reset_card 先将卡重置
+        //所有的操作是在一个循环里 看到 operation over 需要将卡移走 后续先关的交互比如声音，灯的提示可以自己加。
+        //写入刷卡时间
+        ret = write_touch_card_time(&time);
+        //读取所有的刷卡记录
+        //ret = read_all_touch_card_time();
+        //重置卡
         //reset_card();
         uartRxBufferClearFIFO();
-        delayMs(5000);
+        delayMs(2000);
         printf("operation over........................ \r\n");
-        delayMs(5000);
+        delayMs(8000);
     }
     goto  CAR_CHECK;
 

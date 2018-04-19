@@ -1,85 +1,7 @@
-/**************************************************************************/
-/*!
-    @file     pn532_mifare_ultralight.c
-*/
-/**************************************************************************/
-
-/*  MIFARE ULTRALIGHT DESCRIPTION
-    =============================
-
-    MIFARE Ultralight cards typically contain 512 bits (64 bytes) of
-    memory, including 4 bytes (32-bits) of OTP (One Time Programmable)
-    memory where the individual bits can be written but not erased.
-
-        MF0ICU1 Mifare Ultralight Functional Specification:
-        http://www.nxp.com/documents/data_sheet/MF0ICU1.pdf
-
-
-    Mifare Ultralight cards have a 7-byte UID
-
-    EEPROM MEMORY
-    =============
-    Mifare Ultralight cards have 512 bits (64 bytes) of EEPROM memory,
-    including 4 byte (32 bits) of OTP memory.  Unlike Mifare Classic cards,
-    there is no authentication on a per block level, although the blocks
-    can be set to "read-only" mode using Lock Bytes (described below).
-
-    EEPROM memory is organised into 16 pages of four bytes eachs, in
-    the following order
-
-    Page   Description
-    ----   ------------
-    0      Serial Number (4 bytes)
-    1      Serial Number (4 bytes)
-    2      Byte 0:    Serial Number
-           Byte 1:    Internal Memory
-           Byte 2..3: lock bytes
-    3      One-time programmable memory (4 bytes)
-    4..15  User memory (4 bytes)
-
-    Lock Bytes (Page 2)
-    -------------------
-    Bytes 2 and 3 of page 2 are referred to as "Lock Bytes".  Each
-    page from 0x03 and higher can individually locked by setting the
-    corresponding locking bit to "1" to prevent further write access,
-    effectively making the memory read only.
-
-    For information on the lock byte mechanism, refer to section 8.5.2 of
-    the datasheet (referenced above).
-
-    OTP Bytes (Page 3)
-    ------------------
-    Page 3 is the OTP memory, and by default all bits on this page are
-    set to 0.  These bits can be bitwise modified using the Mifare WRITE
-    command, and individual bits can be set to 1, but can not be changed
-    back to 0.
-
-    Data Pages (Pages 4..15)
-    ------------------------
-    Pages 4 to 15 are can be freely read from and written to,
-    provided there is no conflict with the Lock Bytes described above.
-
-    After production, the bytes have the following default values:
-
-    Page    Byte Values
-    ----    ----------------------
-            0     1     2     3
-    4       0xFF  0xFF  0xFF  0xFF
-    5..15   0x00  0x00  0x00  0x00
-
-    ACCESSING DATA BLOCKS
-    =====================
-
-    Before you can access the cards, you must following two steps:
-
-    1.) 'Connect' to a Mifare Ultralight card and retrieve the 7 byte
-        UID of the card.
-
-    2.) Memory can be read and written directly once a passive mode
-        connection has been made.  No authentication is required for
-        Mifare Ultralight cards.
-
-*/
+/*
+ * Copyright (c) 2018 zhangyuhude@163.com
+ * All Rights Reserved.
+ */
 
 #include <string.h>
 
@@ -120,6 +42,7 @@
     @note   Possible error messages are:
 
             - PN532_ERROR_WRONGCARDTYPE
+    获取卡的信息
 */
 /**************************************************************************/
 pn532_error_t pn532_mifareultralight_WaitForPassiveTarget (uint8_t * pbtCUID, size_t * szCUIDLen)

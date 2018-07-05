@@ -162,20 +162,6 @@ void uartxInit(void)
     nvicConfiguration();
 }
 
-/******************************************************************************
- * @brief uart1SendData
- *****************************************************************************/
-void uart1SendData(uint8_t *data,uint8_t length)
-{
-    uint8_t i;
-    for(i=0;i<length;i++)
-    {
-        USART_SendData(USART1, data[i]);
-        while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET)//等待发送完成
-        {
-        }
-    }
-}
 
 
 

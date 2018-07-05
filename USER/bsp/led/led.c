@@ -39,5 +39,5 @@ void LED_Open(void)
  *****************************************************************************/
 void LED_Toggle(void)
 {
-    GPIO_WriteBit(GPIOA, GPIO_Pin_12,(BitAction)((1-GPIO_ReadOutputDataBit(GPIOA, GPIO_Pin_12))));
+    GPIO_WriteBit(LED_PORT, LED_PIN,(BitAction)((1-GPIO_ReadOutputDataBit(LED_PORT, LED_PIN))));
 }

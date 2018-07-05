@@ -1,25 +1,12 @@
 #include "log.h"
 #include "hal_uart.h"
-/******************************************************************************
- * @brief printf打印重定向
- *****************************************************************************/
-PUTCHAR_PROTOTYPE
-{
-    //Place your implementation of fputc here , e.g. write a character to the USART
-    USART_SendData(USART1,(u8)ch);
-    //Loop until the end of transmission
-    while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
-    return ch;
-}
 
-#if 0
 /******************************************************************************
  * @brief __log
  *****************************************************************************/
 void __log(uint8_t level, /*const char * func, uint32_t line,*/ const char * restrict format, ...){
 
-    if( !((true == log_output_disable)
-      && (LEVEL_CLI != level)) )
+    if(LEVEL_CLI != level)
     {
         char    str[LOG_BUF_MAX_SIZE];
         va_list ap;
@@ -54,10 +41,14 @@ void __log(uint8_t level, /*const char * func, uint32_t line,*/ const char * res
             str[cnt1 + cnt2 + 1] = '\n';
         }
         {
-            uint32_t ret = log_putstring((uint8_t *)str, cnt1 + cnt2 + 2);
+            int cnt = 0;
+            while(cnt <= (cnt1 + cnt2 + 2))
+            {
+                USART_SendData(USART1,(u8)str[cnt]);
+                cnt ++;
+                while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
+            }
         }
 
     }
 }
-
-#endif

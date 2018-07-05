@@ -23,14 +23,15 @@ int main(void)
     uartxInit();
 
     //ø¥√≈π∑
-    watchdogInit(2);
+    watchdogInit(10);
+
+    LOG(LEVEL_DEBUG, "--sys start--");
 
     for(;;)
     {
         watchdogFeed();
         LED_Toggle();
         delayMs(1000);
-        printf("kkkkkkk\r\n");
     }
 }
 

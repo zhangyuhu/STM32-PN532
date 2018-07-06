@@ -12,6 +12,9 @@
 #include "hal_uart.h"
 #include "nfc.h"
 #include "log.h"
+#include "timer.h"
+#include "hal_tick.h"
+#include "test.h"
 
 
 int main(void)
@@ -22,10 +25,16 @@ int main(void)
     LED_Init();
     uartxInit();
 
+    hal_tick_init();
+    timer_init();
+
     //ø¥√≈π∑
     watchdogInit(10);
 
+
     LOG(LEVEL_DEBUG, "--sys start--");
+
+    test_fun();
 
     for(;;)
     {

@@ -374,7 +374,7 @@
               <MiscControls>--c99</MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F10X_MD</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Libraries\CMSIS\CM3\CoreSupport;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm;..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\Libraries\STM32F10x_StdPeriph_Driver\src;..\USER;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\USER\bsp;..\USER\bsp\LED;..\USER\bsp\Sys;..\USER\bsp\Delay;..\USER\bsp\Watchdog;..\USER\bsp\Usart;..\USER\bsp\Log;..\USER\bsp\Nfc</IncludePath>
+              <IncludePath>..\Libraries\CMSIS\CM3\CoreSupport;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm;..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\Libraries\STM32F10x_StdPeriph_Driver\src;..\USER;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\USER\bsp;..\USER\bsp\LED;..\USER\bsp\Sys;..\USER\bsp\Delay;..\USER\bsp\Watchdog;..\USER\bsp\Usart;..\USER\bsp\Log;..\USER\bsp\Nfc;..\USER\bsp\timer;..\USER\test</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -612,6 +612,26 @@
               <FileName>log.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\USER\bsp\Log\log.c</FilePath>
+            </File>
+            <File>
+              <FileName>hal_tick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\bsp\timer\hal_tick.c</FilePath>
+            </File>
+            <File>
+              <FileName>timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\bsp\timer\timer.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>test</GroupName>
+          <Files>
+            <File>
+              <FileName>test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\test\test.c</FilePath>
             </File>
           </Files>
         </Group>

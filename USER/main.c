@@ -14,6 +14,7 @@
 #include "log.h"
 #include "timer.h"
 #include "hal_tick.h"
+#include "rtc.h"
 #include "test.h"
 
 
@@ -28,13 +29,14 @@ int main(void)
     hal_tick_init();
     timer_init();
 
+    RTC_Init(true);
     //ø¥√≈π∑
     watchdogInit(10);
 
 
     LOG(LEVEL_DEBUG, "--sys start--");
-
     test_fun();
+
 
     for(;;)
     {

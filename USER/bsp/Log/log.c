@@ -1,5 +1,6 @@
 #include "log.h"
 #include "hal_uart.h"
+#include "rtc.h"
 
 /******************************************************************************
  * @brief __log
@@ -23,7 +24,7 @@ void __log(uint8_t level, /*const char * func, uint32_t line,*/ const char * res
          && (level != LEVEL_SIMPLE_FORCE) )
         {
             UTCTimeStruct utc_time;
-            get_wall_clock_time(&utc_time, false);
+            get_wall_clock_time(&utc_time);
             cnt1 = snprintf(str, sizeof(str), "[%04d-%02d-%02d,%02d:%02d:%02d]:",
                                         utc_time.year, utc_time.month  , utc_time.day,
                                         utc_time.hour, utc_time.minute , utc_time.second

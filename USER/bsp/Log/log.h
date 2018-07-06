@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include "string.h"
 
+#define  LOG_TIME_PRINT             (1)
 #define  DEBUG_LOG                  (1)
 
 #define LOG_BUF_MAX_SIZE            (512)

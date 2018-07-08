@@ -29,7 +29,7 @@ int main(void)
     hal_tick_init();
     timer_init();
 
-    RTC_Init(true);
+    RTC_Init(false);    //true : 更新rtc 时间为编译时间
     //看门狗
     watchdogInit(10);
 

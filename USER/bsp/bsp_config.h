@@ -7,6 +7,8 @@
 #define WATCHDOG
 #define Open_UART1
 //#define Open_UART2
+#define  LOG_TIME_PRINT             (1)
+#define  DEBUG_LOG                  (1)
 
 //LED灯
 #define LED_RCC                                   (RCC_APB2Periph_GPIOA)

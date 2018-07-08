@@ -6,9 +6,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include "string.h"
-
-#define  LOG_TIME_PRINT             (1)
-#define  DEBUG_LOG                  (1)
+#include "bsp_config.h"
 
 #define LOG_BUF_MAX_SIZE            (512)
 

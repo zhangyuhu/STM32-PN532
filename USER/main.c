@@ -15,11 +15,14 @@
 #include "timer.h"
 #include "hal_tick.h"
 #include "rtc.h"
+#include "ds18b20.h"
 #include "test.h"
 
 
 int main(void)
 {
+    uint8_t ret;
+
     SystemInit();
     NVIC_Configuration();
     delayInit(72);
@@ -30,6 +33,11 @@ int main(void)
     timer_init();
 
     RTC_Init(false);    //true : 更新rtc 时间为编译时间
+
+    DS18B20_GPIO_Init();
+    ret = DS18B20_InitSeq();
+    LOG(LEVEL_DEBUG, "DS18B20_InitSeq %d ",ret);
+
     //看门狗
     watchdogInit(10);
 

@@ -7,8 +7,11 @@
 #define WATCHDOG
 #define Open_UART1
 //#define Open_UART2
+#define  DS18B20
+
 #define  LOG_TIME_PRINT             (1)
 #define  DEBUG_LOG                  (1)
+
 
 //LED灯
 #define LED_RCC                                   (RCC_APB2Periph_GPIOA)
@@ -69,6 +72,14 @@
 #define USART3_GPIO_PORT            GPIOC
 #define USART3_RxPin                GPIO_Pin_11
 #define USART3_TxPin                GPIO_Pin_10
+
+#endif
+
+#if defined (DS18B20)
+
+#define DS18B20_RCC                                   (RCC_APB2Periph_GPIOA)
+#define DS18B20_PIN                                   (GPIO_Pin_0)
+#define DS18B20_PORT                                  (GPIOA)
 
 #endif
 

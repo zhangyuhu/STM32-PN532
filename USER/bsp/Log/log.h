@@ -40,6 +40,7 @@ void __log(uint8_t level, /*const char * func, uint32_t line,*/ const char * res
 
 #if (DEBUG_LOG == 1)
     #define LOG(level, format, ...)             LOG_PRINT(level, format, ##__VA_ARGS__)
+    #define LOG_RED(level, format, ...)         LOG_PRINT(level, "\033[31m" format "\033[0m\n", ##__VA_ARGS__)
     #define LOG_RELEASE(level, format, ...)     LOG_PRINT(level, format, ##__VA_ARGS__)
 #else
     #define LOG(level, format, ...)

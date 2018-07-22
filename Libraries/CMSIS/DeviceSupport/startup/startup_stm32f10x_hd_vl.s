@@ -1,15 +1,17 @@
-;******************** (C) COPYRIGHT 2010 STMicroelectronics ********************
-;* File Name          : startup_stm32f10x_ld_vl.s
+;******************** (C) COPYRIGHT 2011 STMicroelectronics ********************
+;* File Name          : startup_stm32f10x_hd_vl.s
 ;* Author             : MCD Application Team
-;* Version            : V3.4.0
-;* Date               : 10/15/2010
-;* Description        : STM32F10x Low Density Value Line Devices vector table  
+;* Version            : V3.5.0
+;* Date               : 11-March-2011
+;* Description        : STM32F10x High Density Value Line Devices vector table  
 ;*                      for MDK-ARM toolchain.  
 ;*                      This module performs:
 ;*                      - Set the initial SP
 ;*                      - Set the initial PC == Reset_Handler
 ;*                      - Set the vector table entries with the exceptions ISR address
-;*                      - Configure the clock system
+;*                      - Configure the clock system and also configure the external 
+;*                        SRAM mounted on STM32100E-EVAL board to be used as data 
+;*                        memory (optional, to be enabled by user)
 ;*                      - Branches to __main in the C library (which eventually
 ;*                        calls main()).
 ;*                      After Reset the CortexM3 processor is in Thread mode,
@@ -106,32 +108,37 @@ __Vectors       DCD     __initial_sp                    ; Top of Stack
                 DCD     TIM1_CC_IRQHandler              ; TIM1 Capture Compare
                 DCD     TIM2_IRQHandler                 ; TIM2
                 DCD     TIM3_IRQHandler                 ; TIM3
-                DCD     0                               ; Reserved
+                DCD     TIM4_IRQHandler                 ; TIM4
                 DCD     I2C1_EV_IRQHandler              ; I2C1 Event
                 DCD     I2C1_ER_IRQHandler              ; I2C1 Error
-                DCD     0                               ; Reserved
-                DCD     0                               ; Reserved
+                DCD     I2C2_EV_IRQHandler              ; I2C2 Event
+                DCD     I2C2_ER_IRQHandler              ; I2C2 Error
                 DCD     SPI1_IRQHandler                 ; SPI1
-                DCD     0                               ; Reserved
+                DCD     SPI2_IRQHandler                 ; SPI2
                 DCD     USART1_IRQHandler               ; USART1
                 DCD     USART2_IRQHandler               ; USART2
-                DCD     0                               ; Reserved
+                DCD     USART3_IRQHandler               ; USART3
                 DCD     EXTI15_10_IRQHandler            ; EXTI Line 15..10
                 DCD     RTCAlarm_IRQHandler             ; RTC Alarm through EXTI Line
                 DCD     CEC_IRQHandler                  ; HDMI-CEC
+                DCD     TIM12_IRQHandler                ; TIM12
+                DCD     TIM13_IRQHandler                ; TIM13 
+                DCD     TIM14_IRQHandler                ; TIM14
                 DCD     0                               ; Reserved
                 DCD     0                               ; Reserved
                 DCD     0                               ; Reserved
-                DCD     0                               ; Reserved 
                 DCD     0                               ; Reserved
-                DCD     0                               ; Reserved
-                DCD     0                               ; Reserved
-                DCD     0                               ; Reserved 
-                DCD     0                               ; Reserved
-                DCD     0                               ; Reserved
-                DCD     0                               ; Reserved
+                DCD     TIM5_IRQHandler                 ; TIM5
+                DCD     SPI3_IRQHandler                 ; SPI3
+                DCD     UART4_IRQHandler                ; UART4
+                DCD     UART5_IRQHandler                ; UART5
                 DCD     TIM6_DAC_IRQHandler             ; TIM6 and DAC underrun
                 DCD     TIM7_IRQHandler                 ; TIM7
+                DCD     DMA2_Channel1_IRQHandler        ; DMA2 Channel1
+                DCD     DMA2_Channel2_IRQHandler        ; DMA2 Channel2
+                DCD     DMA2_Channel3_IRQHandler        ; DMA2 Channel3
+                DCD     DMA2_Channel4_5_IRQHandler      ; DMA2 Channel4 & Channel5
+                DCD     DMA2_Channel5_IRQHandler        ; DMA2 Channel5                
 __Vectors_End
 
 __Vectors_Size  EQU  __Vectors_End - __Vectors
@@ -221,16 +228,34 @@ Default_Handler PROC
                 EXPORT  TIM1_CC_IRQHandler               [WEAK]
                 EXPORT  TIM2_IRQHandler                  [WEAK]
                 EXPORT  TIM3_IRQHandler                  [WEAK]
+                EXPORT  TIM4_IRQHandler                  [WEAK]
                 EXPORT  I2C1_EV_IRQHandler               [WEAK]
                 EXPORT  I2C1_ER_IRQHandler               [WEAK]
+                EXPORT  I2C2_EV_IRQHandler               [WEAK]
+                EXPORT  I2C2_ER_IRQHandler               [WEAK]
                 EXPORT  SPI1_IRQHandler                  [WEAK]
+                EXPORT  SPI2_IRQHandler                  [WEAK]
                 EXPORT  USART1_IRQHandler                [WEAK]
                 EXPORT  USART2_IRQHandler                [WEAK]
+                EXPORT  USART3_IRQHandler                [WEAK]
                 EXPORT  EXTI15_10_IRQHandler             [WEAK]
                 EXPORT  RTCAlarm_IRQHandler              [WEAK]
                 EXPORT  CEC_IRQHandler                   [WEAK]
+                EXPORT  TIM12_IRQHandler                 [WEAK]
+                EXPORT  TIM13_IRQHandler                 [WEAK]
+                EXPORT  TIM14_IRQHandler                 [WEAK]
+                EXPORT  TIM5_IRQHandler                  [WEAK]
+                EXPORT  SPI3_IRQHandler                  [WEAK]
+                EXPORT  UART4_IRQHandler                 [WEAK]
+                EXPORT  UART5_IRQHandler                 [WEAK]                
                 EXPORT  TIM6_DAC_IRQHandler              [WEAK]
                 EXPORT  TIM7_IRQHandler                  [WEAK]
+                EXPORT  DMA2_Channel1_IRQHandler         [WEAK]
+                EXPORT  DMA2_Channel2_IRQHandler         [WEAK]
+                EXPORT  DMA2_Channel3_IRQHandler         [WEAK]
+                EXPORT  DMA2_Channel4_5_IRQHandler       [WEAK]
+                EXPORT  DMA2_Channel5_IRQHandler         [WEAK]                
+
 WWDG_IRQHandler
 PVD_IRQHandler
 TAMPER_IRQHandler
@@ -257,16 +282,33 @@ TIM1_TRG_COM_TIM17_IRQHandler
 TIM1_CC_IRQHandler
 TIM2_IRQHandler
 TIM3_IRQHandler
+TIM4_IRQHandler
 I2C1_EV_IRQHandler
 I2C1_ER_IRQHandler
+I2C2_EV_IRQHandler
+I2C2_ER_IRQHandler
 SPI1_IRQHandler
+SPI2_IRQHandler
 USART1_IRQHandler
 USART2_IRQHandler
+USART3_IRQHandler
 EXTI15_10_IRQHandler
 RTCAlarm_IRQHandler
 CEC_IRQHandler
+TIM12_IRQHandler
+TIM13_IRQHandler
+TIM14_IRQHandler
+TIM5_IRQHandler
+SPI3_IRQHandler
+UART4_IRQHandler
+UART5_IRQHandler
 TIM6_DAC_IRQHandler
 TIM7_IRQHandler
+DMA2_Channel1_IRQHandler
+DMA2_Channel2_IRQHandler
+DMA2_Channel3_IRQHandler
+DMA2_Channel4_5_IRQHandler
+DMA2_Channel5_IRQHandler
                 B       .
 
                 ENDP
@@ -301,4 +343,4 @@ __user_initial_stackheap
 
                  END
 
-;******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE*****
+;******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE*****

@@ -127,8 +127,8 @@ static void nvicConfiguration(void)
 #if defined (Open_UART1)
     /*使能串口中断,并设置优先级*/
     NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
 #endif

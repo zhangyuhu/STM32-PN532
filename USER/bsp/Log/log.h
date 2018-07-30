@@ -8,7 +8,7 @@
 #include "string.h"
 #include "bsp_config.h"
 
-#define LOG_BUF_MAX_SIZE            (32)
+#define LOG_BUF_MAX_SIZE            (128)
 
 
 

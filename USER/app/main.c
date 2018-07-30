@@ -12,6 +12,7 @@
 
 #include "delay.h"
 #include "ds18b20.h"
+#include "rtc.h"
 
 #include "app_task.h"
 
@@ -38,6 +39,8 @@ int main(void)
 
     delayInit(72);
     DS18B20_GPIO_Init();
+
+    RTC_Init(false);
 
     xTaskCreate(vAppTask1, "Task1", TASK1_STACK_SIZE, NULL, TASK1_PRIORITY, NULL);
     xTaskCreate(vAppTask2, "Task2", TASK2_STACK_SIZE, NULL, TASK2_PRIORITY, NULL);

@@ -16,7 +16,7 @@
 #define  USE_LED_2
 
 #define  USE_FreeRTOS               (1)
-#define  LOG_TIME_PRINT             (0)
+#define  LOG_TIME_PRINT             (1)
 #define  DEBUG_LOG                  (1)
 
 #if USE_FreeRTOS == 1

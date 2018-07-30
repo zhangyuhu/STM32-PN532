@@ -3,19 +3,27 @@
  * All Rights Reserved.
  */
 #include "delay.h"
-#include "sys.h"
 
+#include "bsp_config.h"
+#include "sys.h"
+#include "dwt.h"
+
+#if (1 == USE_SYSTICK_DELAY)
 static uint8_t  facUs=0;                                    //us延时倍乘数
 static uint16_t facMs=0;                                    //ms延时倍乘数
-
+#endif
 /******************************************************************************
  * @brief delayInit
  *****************************************************************************/
 void delayInit(uint8_t SYSCLK)
 {
+#if (1 == USE_SYSTICK_DELAY)
     SysTick_CLKSourceConfig(SysTick_CLKSource_HCLK_Div8);   //选择外部时钟,HCLK/8
     facUs=SYSCLK/8;                                         //硬件分频,fac_us得出的值要给下面的时钟函数使用
     facMs =(u16)facUs*1000;
+#elif (1 == USE_WDT_DELAY)
+    bsp_InitDWT();
+#endif
 }
 
 /******************************************************************************
@@ -23,6 +31,7 @@ void delayInit(uint8_t SYSCLK)
  *****************************************************************************/
 void delayUs(uint32_t nus)
 {
+#if (1 == USE_SYSTICK_DELAY)
     uint32_t temp;
     SysTick->LOAD = nus*facUs;              //延时10us,10*9 = 90,装到load寄存器中
     SysTick->VAL=0x00;                      //计数器清0
@@ -34,6 +43,9 @@ void delayUs(uint32_t nus)
     while(temp & 0x01 && !(temp &(1<<16))); //查询
     SysTick->CTRL = 0x00;                   //关闭定时器
     SysTick->VAL = 0x00;                    //清空val,清空定时器
+#elif (1 == USE_WDT_DELAY)
+    bsp_DelayUS(nus);
+#endif
 }
 
  /******************************************************************************
@@ -41,6 +53,7 @@ void delayUs(uint32_t nus)
  *****************************************************************************/
 void delayMs(uint16_t nms)
 {
+#if (1 == USE_SYSTICK_DELAY)
     uint32_t temp;
     SysTick->LOAD = nms*facMs;             //延时10ms,10*9 = 90,装到load寄存器中
     SysTick->VAL=0x00;                     //计数器清0
@@ -53,6 +66,9 @@ void delayMs(uint16_t nms)
 
     SysTick->CTRL = 0x00;                  //关闭定时器
     SysTick->VAL = 0x00;                   //清空val,清空定时器
+#elif  (1 == USE_WDT_DELAY)
+    bsp_DelayMS(nms);
+#endif
 }
 
 

@@ -9,6 +9,9 @@
 //#define Open_UART2
 #define  DS18B20
 
+#define  USE_WDT_DELAY              (1)
+#define  USE_SYSTICK_DELAY          (!(USE_WDT_DELAY))
+
 #define  USE_LED_1
 #define  USE_LED_2
 

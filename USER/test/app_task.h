@@ -4,6 +4,7 @@
 
 void vAppTask1(void *pvParameters);
 void vAppTask2(void *pvParameters);
+void vAppTask_GetTemperature(void *pvParameters);
 
 
 

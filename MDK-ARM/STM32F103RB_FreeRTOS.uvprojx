@@ -335,7 +335,7 @@
               <MiscControls>--c99</MiscControls>
               <Define>STM32F10X_MD  USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Libraries\CMSIS\CoreSupport;..\Libraries\CMSIS\DeviceSupport;..\Libraries\CMSIS\DeviceSupport\startup;..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\FreeRTOS\include;..\FreeRTOS\portable\RVDS\ARM_CM3;..\USER;..\USER\app;..\USER\bsp;..\USER\bsp\sys;..\USER\bsp\led;..\USER\bsp\Usart;..\USER\bsp\Log;..\USER\bsp\dwt;..\USER\bsp\delay;..\USER\bsp\DS18B20;..\USER\test</IncludePath>
+              <IncludePath>..\Libraries\CMSIS\CoreSupport;..\Libraries\CMSIS\DeviceSupport;..\Libraries\CMSIS\DeviceSupport\startup;..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\FreeRTOS\include;..\FreeRTOS\portable\RVDS\ARM_CM3;..\USER;..\USER\app;..\USER\bsp;..\USER\bsp\sys;..\USER\bsp\led;..\USER\bsp\Usart;..\USER\bsp\Log;..\USER\bsp\dwt;..\USER\bsp\delay;..\USER\bsp\DS18B20;..\USER\bsp\RTC;..\USER\test</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -603,6 +603,11 @@
               <FileName>ds18b20.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\USER\bsp\DS18B20\ds18b20.c</FilePath>
+            </File>
+            <File>
+              <FileName>rtc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\bsp\RTC\rtc.c</FilePath>
             </File>
           </Files>
         </Group>
